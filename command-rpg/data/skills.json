@@ -7,7 +7,9 @@
    "power": 2.6,
    "type": "attack",
    "unlockLevel": 1,
-   "description": "炎をまとった一撃"
+   "description": "炎をまとった一撃",
+   "element": "炎",
+   "critRate": 0.12
   },
   {
    "id": "heal",
@@ -16,7 +18,9 @@
    "heal": 26,
    "type": "heal",
    "unlockLevel": 2,
-   "description": "HPを回復する"
+   "description": "HPを回復する",
+   "element": "光",
+   "critRate": 0
   },
   {
    "id": "storm",
@@ -25,7 +29,9 @@
    "power": 3.4,
    "type": "attack",
    "unlockLevel": 4,
-   "description": "目にも止まらぬ連続突き"
+   "description": "目にも止まらぬ連続突き",
+   "element": "風",
+   "critRate": 0.5
   }
  ]
 }

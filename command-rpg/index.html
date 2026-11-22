@@ -21,6 +21,7 @@
   </div>
 
   <div id="gameScreen" class="hidden">
+    <div id="guideLine" class="guide-line">目標：読み込み中…</div>
     <div class="hud window">
       <span id="hudName">ゆうしゃ</span>
       <span id="hudLv">Lv 1</span>
@@ -49,6 +50,7 @@
     </div>
 
     <div class="field-buttons">
+      <button id="menuBtn" type="button">メニュー</button>
       <button id="saveBtn" type="button">セーブ</button>
       <button id="potionBtn" type="button">やくそうを使う</button>
       <button id="muteBtn" type="button">音：ON</button>
@@ -67,6 +69,23 @@
       </div>
     </div>
     <p class="help">キーボード：矢印/WASD＝移動・選択、Enter/Z＝決定、Esc/X＝戻る、M＝音のON/OFF</p>
+  </div>
+
+  <div id="panelOverlay" class="overlay hidden">
+    <div class="sheet window">
+      <div id="panelTitle" class="sheet-title"></div>
+      <div id="panelBody" class="sheet-body"></div>
+      <button id="panelClose" class="sheet-close" type="button">とじる（B）</button>
+    </div>
+  </div>
+  <div id="confirmOverlay" class="overlay hidden">
+    <div class="sheet window confirm-sheet">
+      <div id="confirmText" class="confirm-text"></div>
+      <div class="confirm-btns">
+        <button id="confirmYes" type="button">はい</button>
+        <button id="confirmNo" type="button">いいえ</button>
+      </div>
+    </div>
   </div>
 
   <p id="loadError" class="load-error hidden">データを読み込めませんでした。公開ページ（https）から開いてください。</p>

@@ -90,3 +90,49 @@ h1 { text-align: center; font-size: 20px; letter-spacing: 4px; margin: 6px 0 10p
 .round-btn:active { background: #a82c3c; }
 .help { color: #778; font-size: 12px; text-align: center; }
 .load-error { color: #ff8080; text-align: center; }
+
+/* ---- ステップ2追加：ガイド行・モーダル・リスト ---- */
+html, body { height: 100%; overscroll-behavior: none; }
+body { touch-action: manipulation; }
+.app { min-height: 100dvh; display: flex; flex-direction: column; }
+.guide-line {
+  background: #14213d; border: 2px solid #ffd23e; color: #ffe98a; border-radius: 6px;
+  font-size: 13px; padding: 6px 10px; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 40;
+  display: flex; align-items: flex-end; justify-content: center; padding: 10px;
+}
+.sheet { width: 100%; max-width: 500px; max-height: 78dvh; display: flex; flex-direction: column; }
+.sheet-title { font-size: 17px; font-weight: 700; border-bottom: 1px solid #666; padding-bottom: 6px; margin-bottom: 6px; }
+.sheet-body { overflow-y: auto; -webkit-overflow-scrolling: touch; min-height: 0; }
+.sheet-close {
+  margin-top: 10px; min-height: 48px; font-family: inherit; font-size: 15px;
+  background: #111; color: #fff; border: 2px solid #fff; border-radius: 6px; width: 100%;
+}
+.menu-row {
+  display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  width: 100%; min-height: 52px; padding: 10px 12px; margin: 4px 0;
+  background: #111; color: #fff; border: 2px solid #888; border-radius: 8px;
+  font-family: inherit; font-size: 16px; text-align: left;
+}
+.menu-row:active { background: #333; }
+.menu-row .sub { color: #9fd; font-size: 13px; text-align: right; }
+.menu-row.disabled { color: #666; border-color: #444; }
+.stat-table { width: 100%; font-size: 15px; border-collapse: collapse; }
+.stat-table td { padding: 7px 4px; border-bottom: 1px solid #333; }
+.stat-table td:last-child { text-align: right; }
+.confirm-sheet { text-align: center; }
+.confirm-text { font-size: 16px; line-height: 1.7; padding: 8px 4px 14px; white-space: pre-line; }
+.confirm-btns { display: flex; gap: 12px; }
+.confirm-btns button {
+  flex: 1; min-height: 52px; font-family: inherit; font-size: 17px; font-weight: 700;
+  border-radius: 8px; border: 2px solid #fff; background: #2456c8; color: #fff;
+}
+.confirm-btns #confirmNo { background: #333; }
+.shop-tabs { display: flex; gap: 8px; margin-bottom: 6px; }
+.shop-tabs button {
+  flex: 1; min-height: 48px; font-family: inherit; font-size: 16px; border-radius: 8px;
+  border: 2px solid #888; background: #111; color: #fff;
+}
+.shop-tabs button.active { background: #fff; color: #000; font-weight: 700; }

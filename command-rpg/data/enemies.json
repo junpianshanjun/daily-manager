@@ -35,7 +35,8 @@
      "g": "#3ecf5a",
      "k": "#12351a"
     }
-   }
+   },
+   "pattern": "normal"
   },
   {
    "id": "goblin",
@@ -77,7 +78,8 @@
      "l": "#4a3320",
      "o": "#333333"
     }
-   }
+   },
+   "pattern": "debuff"
   },
   {
    "id": "spider",
@@ -114,7 +116,8 @@
      "p": "#5b3a8e",
      "k": "#ff4040"
     }
-   }
+   },
+   "pattern": "poison"
   },
   {
    "id": "wolf",
@@ -151,7 +154,8 @@
      "w": "#8a8f98",
      "k": "#15181d"
     }
-   }
+   },
+   "pattern": "charge"
   },
   {
    "id": "demonlord",
@@ -194,7 +198,8 @@
      "m": "#3a2a4a",
      "o": "#222222"
     }
-   }
+   },
+   "pattern": "mixed"
   }
  ]
 }

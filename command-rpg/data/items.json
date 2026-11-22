@@ -1,0 +1,101 @@
+{
+ "weapons": [
+  {
+   "id": "stick",
+   "name": "ひのきのぼう",
+   "bonus": 0,
+   "price": 0
+  },
+  {
+   "id": "copper",
+   "name": "どうのつるぎ",
+   "bonus": 4,
+   "price": 120
+  },
+  {
+   "id": "iron",
+   "name": "てつのつるぎ",
+   "bonus": 8,
+   "price": 350
+  },
+  {
+   "id": "magic",
+   "name": "まほうのつるぎ",
+   "bonus": 13,
+   "price": 900
+  }
+ ],
+ "armors": [
+  {
+   "id": "cloth",
+   "name": "ぬののふく",
+   "bonus": 0,
+   "price": 0
+  },
+  {
+   "id": "leather",
+   "name": "かわのよろい",
+   "bonus": 3,
+   "price": 100
+  },
+  {
+   "id": "iron_a",
+   "name": "てつのよろい",
+   "bonus": 7,
+   "price": 320
+  },
+  {
+   "id": "mithril",
+   "name": "ミスリルよろい",
+   "bonus": 12,
+   "price": 850
+  }
+ ],
+ "consumables": [
+  {
+   "id": "potion",
+   "name": "やくそう",
+   "price": 20,
+   "effect": "heal",
+   "amount": 18,
+   "description": "HPを18回復"
+  },
+  {
+   "id": "hipotion",
+   "name": "上やくそう",
+   "price": 60,
+   "effect": "heal",
+   "amount": 50,
+   "description": "HPを50回復"
+  },
+  {
+   "id": "ether",
+   "name": "エーテル",
+   "price": 80,
+   "effect": "mp",
+   "amount": 10,
+   "description": "MPを10回復"
+  },
+  {
+   "id": "antidote",
+   "name": "どくけし",
+   "price": 30,
+   "effect": "antidote",
+   "amount": 0,
+   "description": "毒を治す"
+  }
+ ],
+ "shop": [
+  "copper",
+  "iron",
+  "magic",
+  "leather",
+  "iron_a",
+  "mithril",
+  "potion",
+  "hipotion",
+  "ether",
+  "antidote"
+ ],
+ "sellRate": 0.5
+}

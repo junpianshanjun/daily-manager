@@ -21,6 +21,10 @@ const Battle = (() => {
   let menuItems = [];
   let menuIndex = 0;
   let menuMode = "command"; // command | skill
+  let poisonTurns = 0;   // プレイヤーの毒（残りターン）
+  let defDownTurns = 0;  // プレイヤーの防御ダウン（残りターン）
+  let defDownVal = 0;
+  let enemyCharging = false; // 敵が力を溜めている
 
   const stage = () => document.getElementById("battleStage");
   const cmdWin = () => document.getElementById("commandWindow");
@@ -119,10 +123,10 @@ const Battle = (() => {
     return false;
   }
 
-  async function playerAttack(power, label) {
+  async function playerAttack(power, label, critRate) {
     const p = Game.player;
     await Game.showMessage(`${p.name}の ${label}！`);
-    const { dmg, crit } = calcDamage(p.atk, enemy.def, power, undefined, undefined, power ? [0.9, 1.1] : undefined);
+    const { dmg, crit } = calcDamage(Game.effAtk(), enemy.def, power, critRate, undefined, power ? [0.9, 1.1] : undefined);
     enemy.hp -= dmg;
     if (crit) { Sound.se.critical(); critPopup(); shake(true); } else { Sound.se.hit(); shake(false); }
     popup(String(dmg));
@@ -132,22 +136,62 @@ const Battle = (() => {
   }
   async function enemyAttack() {
     const p = Game.player;
-    let dmg, label = "こうげき";
-    if (enemy.skill && Math.random() < enemy.skill.rate) {
-      label = enemy.skill.name;
-      dmg = calcDamage(enemy.atk, p.def, enemy.skill.power, 0, 1, [0.9, 1.1]).dmg;
-    } else {
-      dmg = calcDamage(enemy.atk, p.def, null, 0, 1, undefined).dmg;
+    const effDef = Math.max(0, Game.effDef() - (defDownTurns > 0 ? defDownVal : 0));
+    const applyHit = async (dmg, label) => {
+      if (guarding) dmg = Math.max(1, Math.floor(dmg * Game.DATA.characters.damageFormula.guardMultiplier));
+      p.hp -= dmg;
+      Sound.se.playerHit(); shake(false);
+      Game.updateHUD();
+      await Game.showMessage(`${enemy.name}の ${label}！ ${p.name}は ${dmg}の ダメージを うけた！`);
+      return dmg;
+    };
+    // 力を溜めた次のターンは大ダメージ
+    if (enemyCharging) {
+      enemyCharging = false;
+      await applyHit(calcDamage(enemy.atk, effDef, 2.3, 0, 1, [0.95, 1.05]).dmg, "渾身の いちげき");
+      return;
     }
-    if (guarding) dmg = Math.max(1, Math.floor(dmg * Game.DATA.characters.damageFormula.guardMultiplier));
-    p.hp -= dmg;
-    Sound.se.playerHit(); shake(false);
-    Game.updateHUD();
-    await Game.showMessage(`${enemy.name}の ${label}！ ${p.name}は ${dmg}の ダメージを うけた！`);
+    const pat = enemy.pattern || "normal";
+    const roll = Math.random();
+    if ((pat === "charge" || pat === "mixed") && roll < 0.3) {
+      enemyCharging = true;
+      Sound.se.encounter();
+      await Game.showMessage(`${enemy.name}は 力を 溜めている！ 次のターンは 大ダメージの予感…『ぼうぎょ』で備えよう！`);
+      return;
+    }
+    if (pat === "poison" && roll < 0.45) {
+      await applyHit(calcDamage(enemy.atk, effDef, null, 0, 1, undefined).dmg, "どくのキバ");
+      if (p.hp > 0 && poisonTurns <= 0) {
+        poisonTurns = 3;
+        await Game.showMessage(`${p.name}は 毒に かかった！（3ターン、毎ターン4ダメージ）`);
+      }
+      return;
+    }
+    if ((pat === "debuff" || pat === "mixed") && roll < 0.35) {
+      defDownTurns = 3; defDownVal = 3;
+      await Game.showMessage(`${enemy.name}の ねばねば攻撃！ ${p.name}の 防御が 3 下がった！（3ターン）`);
+      return;
+    }
+    if (enemy.skill && Math.random() < enemy.skill.rate) {
+      await applyHit(calcDamage(enemy.atk, effDef, enemy.skill.power, 0, 1, [0.9, 1.1]).dmg, enemy.skill.name);
+      return;
+    }
+    await applyHit(calcDamage(enemy.atk, effDef, null, 0, 1, undefined).dmg, "こうげき");
+  }
+  async function statusTick() {
+    const p = Game.player;
+    if (defDownTurns > 0) defDownTurns -= 1;
+    if (poisonTurns > 0 && p.hp > 0) {
+      poisonTurns -= 1;
+      p.hp -= 4;
+      Sound.se.playerHit(); Game.updateHUD();
+      await Game.showMessage(`毒の ダメージ！ ${p.name}は 4の ダメージを うけた！`);
+    }
   }
 
   async function start(enemyData, boss) {
     active = true; isBoss = boss; guarding = false;
+    poisonTurns = 0; defDownTurns = 0; defDownVal = 0; enemyCharging = false;
     enemy = JSON.parse(JSON.stringify(enemyData));
     enemy.hp = enemy.maxHp;
     document.getElementById("fieldWrap").classList.add("hidden");
@@ -167,7 +211,7 @@ const Battle = (() => {
           { id: "attack", label: "たたかう" },
           { id: "skill", label: "スキル" },
           { id: "guard", label: "ぼうぎょ" },
-          { id: "item", label: `アイテム（やくそう ×${p.potions}）`, disabled: p.potions <= 0 },
+          { id: "item", label: "アイテム", disabled: Game.DATA.items.consumables.every(c => Game.countItem(c.id) <= 0) },
           { id: "flee", label: "にげる" },
         ], "command");
         if (cmd.id === "attack") { await playerAttack(null, "こうげき"); acted = true; }
@@ -185,7 +229,7 @@ const Battle = (() => {
             Sound.se.heal(); popup(`+${p.hp - before}`, "heal"); Game.updateHUD();
             await Game.showMessage(`${p.name}は ${s.name}を となえた！ HPが ${p.hp - before} かいふくした！`);
           } else {
-            await playerAttack(s.power, s.name);
+            await playerAttack(s.power, `${s.name}（${s.element}）`, s.critRate);
           }
           acted = true;
         }
@@ -195,12 +239,33 @@ const Battle = (() => {
           acted = true;
         }
         else if (cmd.id === "item") {
-          const p2 = Game.player;
-          p2.potions -= 1;
-          const before = p2.hp;
-          p2.hp = Math.min(p2.maxHp, p2.hp + Game.DATA.characters.hero.potionHeal);
-          Sound.se.heal(); popup(`+${p2.hp - before}`, "heal"); Game.updateHUD();
-          await Game.showMessage(`やくそうを つかった！ HPが ${p2.hp - before} かいふくした！`);
+          const owned = Game.DATA.items.consumables.filter(c => Game.countItem(c.id) > 0);
+          const it = await waitMenu(owned.map(c => ({
+            id: c.id, label: `${c.name} ×${Game.countItem(c.id)}（${c.description}）`, item: c,
+          })).concat([{ id: "back", label: "もどる" }]), "skill");
+          if (it.id === "back") continue;
+          const c = it.item;
+          if (c.effect === "heal") {
+            if (p.hp >= p.maxHp) { await Game.showMessage("HPは まんたんだ。"); continue; }
+            const before = p.hp;
+            p.hp = Math.min(p.maxHp, p.hp + c.amount);
+            Game.removeItem(c.id, 1);
+            Sound.se.heal(); popup(`+${p.hp - before}`, "heal"); Game.updateHUD();
+            await Game.showMessage(`${c.name}を つかった！ HPが ${p.hp - before} かいふくした！`);
+          } else if (c.effect === "mp") {
+            if (p.mp >= p.maxMp) { await Game.showMessage("MPは まんたんだ。"); continue; }
+            const before = p.mp;
+            p.mp = Math.min(p.maxMp, p.mp + c.amount);
+            Game.removeItem(c.id, 1);
+            Sound.se.heal(); Game.updateHUD();
+            await Game.showMessage(`${c.name}を つかった！ MPが ${p.mp - before} かいふくした！`);
+          } else if (c.effect === "antidote") {
+            if (poisonTurns <= 0) { await Game.showMessage("今は 毒に かかっていない。"); continue; }
+            poisonTurns = 0;
+            Game.removeItem(c.id, 1);
+            Sound.se.heal(); Game.updateHUD();
+            await Game.showMessage(`${c.name}を つかった！ 毒が 治った！`);
+          }
           acted = true;
         }
         else if (cmd.id === "flee") {
@@ -218,6 +283,8 @@ const Battle = (() => {
       if (result) break;
       if (enemy.hp <= 0) { result = "win"; break; }
       await enemyAttack();
+      if (Game.player.hp <= 0) { Game.player.hp = 0; Game.updateHUD(); result = "lose"; break; }
+      await statusTick();
       if (Game.player.hp <= 0) { Game.player.hp = 0; Game.updateHUD(); result = "lose"; break; }
     }
 
