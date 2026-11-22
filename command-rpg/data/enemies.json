@@ -1,0 +1,200 @@
+{
+ "enemies": [
+  {
+   "id": "slime",
+   "name": "スライム",
+   "maxHp": 18,
+   "atk": 7,
+   "def": 2,
+   "spd": 3,
+   "exp": 8,
+   "gold": 5,
+   "areas": [
+    "grass"
+   ],
+   "sprite": {
+    "pixels": [
+     "................",
+     "................",
+     "......gggg......",
+     "....gggggggg....",
+     "...gggggggggg...",
+     "..gggggggggggg..",
+     "..ggkggggggkgg..",
+     "..ggkggggggkgg..",
+     "..gggggggggggg..",
+     "..gggggggggggg..",
+     "...gggggggggg...",
+     "....gggggggg....",
+     "................",
+     "................",
+     "................",
+     "................"
+    ],
+    "palette": {
+     "g": "#3ecf5a",
+     "k": "#12351a"
+    }
+   }
+  },
+  {
+   "id": "goblin",
+   "name": "ゴブリン",
+   "maxHp": 26,
+   "atk": 10,
+   "def": 3,
+   "spd": 5,
+   "exp": 14,
+   "gold": 9,
+   "areas": [
+    "grass",
+    "forest"
+   ],
+   "sprite": {
+    "pixels": [
+     "................",
+     "....g......g....",
+     "...ggg....ggg...",
+     "....gggggggg....",
+     "....gssssssg....",
+     "....sksksksg....",
+     "....ssssssss....",
+     ".....ssssss.....",
+     "....tttttttt....",
+     "...tttttttttt...",
+     "...stttttttts...",
+     "....tttttttt....",
+     "....llllllll....",
+     "....lll..lll....",
+     "...ooo....ooo...",
+     "...ooo....ooo..."
+    ],
+    "palette": {
+     "g": "#57a639",
+     "s": "#8fce62",
+     "k": "#14240c",
+     "t": "#7a4a21",
+     "l": "#4a3320",
+     "o": "#333333"
+    }
+   }
+  },
+  {
+   "id": "spider",
+   "name": "おおグモ",
+   "maxHp": 30,
+   "atk": 12,
+   "def": 4,
+   "spd": 8,
+   "exp": 20,
+   "gold": 11,
+   "areas": [
+    "forest"
+   ],
+   "sprite": {
+    "pixels": [
+     "................",
+     "................",
+     "..p..........p..",
+     "...p........p...",
+     "....p..pp..p....",
+     ".....pppppp.....",
+     "...pppppppppp...",
+     "..ppkppppppkpp..",
+     "..pppppppppppp..",
+     "...pppppppppp...",
+     "....pppppppp....",
+     "...p..p..p..p...",
+     "..p...p..p...p..",
+     "..p...p..p...p..",
+     "................",
+     "................"
+    ],
+    "palette": {
+     "p": "#5b3a8e",
+     "k": "#ff4040"
+    }
+   }
+  },
+  {
+   "id": "wolf",
+   "name": "まよいのオオカミ",
+   "maxHp": 38,
+   "atk": 14,
+   "def": 5,
+   "spd": 11,
+   "exp": 30,
+   "gold": 14,
+   "areas": [
+    "forest"
+   ],
+   "sprite": {
+    "pixels": [
+     "................",
+     "................",
+     "..ww........ww..",
+     "..www......www..",
+     "...wwwwwwwwww...",
+     "...wkw....wkw...",
+     "...wwwwwwwwww...",
+     "....wwwwwwww....",
+     "....wwwwww......",
+     "...wwwwwwwwww...",
+     "..wwwwwwwwwwww..",
+     "..ww.wwwwww.ww..",
+     "..ww.wwwwww.ww..",
+     "..ww........ww..",
+     "..ww........ww..",
+     "................"
+    ],
+    "palette": {
+     "w": "#8a8f98",
+     "k": "#15181d"
+    }
+   }
+  },
+  {
+   "id": "demonlord",
+   "name": "まおう",
+   "maxHp": 150,
+   "atk": 17,
+   "def": 7,
+   "spd": 9,
+   "exp": 200,
+   "gold": 300,
+   "boss": true,
+   "skill": {
+    "name": "あんこくのいちげき",
+    "power": 2.4,
+    "rate": 0.3
+   },
+   "sprite": {
+    "pixels": [
+     "..rr........rr..",
+     "...rr......rr...",
+     "....rrrrrrrr....",
+     "....rrrrrrrr....",
+     "....rkeerrker...",
+     "....rrrrrrrr....",
+     "....rrkrrkrr....",
+     "....rrrrrrrr....",
+     ".....rrrrrr.....",
+     "..mmmmmmmmmmmm..",
+     ".mmmmmmmmmmmmmm.",
+     ".mmmmmmmmmmmmmm.",
+     "..mmmmmmmmmmmm..",
+     "...mmmmmmmmmm...",
+     "...mmm....mmm...",
+     "...ooo....ooo..."
+    ],
+    "palette": {
+     "r": "#b03030",
+     "k": "#1a0505",
+     "e": "#ffd23e",
+     "m": "#3a2a4a",
+     "o": "#222222"
+    }
+   }
+  }
+ ]
+}

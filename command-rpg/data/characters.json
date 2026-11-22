@@ -1,0 +1,58 @@
+{
+ "hero": {
+  "name": "ゆうしゃ",
+  "base": {
+   "level": 1,
+   "maxHp": 32,
+   "maxMp": 10,
+   "atk": 11,
+   "def": 5,
+   "spd": 7
+  },
+  "growthPerLevel": {
+   "maxHp": 8,
+   "maxMp": 3,
+   "atk": 3,
+   "def": 2,
+   "spd": 1
+  },
+  "expNextBase": 20,
+  "expNextPerLevel": 15,
+  "startPotions": 3,
+  "potionHeal": 18,
+  "sprite": {
+   "pixels": [
+    "................",
+    ".....kkkkkk.....",
+    "....kssssssk....",
+    "....sksksksk....",
+    "....ssssssss....",
+    ".....ssssss.....",
+    "....bbbbbbbb....",
+    "...bbbbbbbbbb...",
+    "...sbbbbbbbbs...",
+    "...sbbbbbbbbs...",
+    "....bbbbbbbb....",
+    "....dddddddd....",
+    "....ddd..ddd....",
+    "....ddd..ddd....",
+    "...oooo..oooo...",
+    "...oooo..oooo..."
+   ],
+   "palette": {
+    "k": "#20242c",
+    "s": "#f2c189",
+    "b": "#2456c8",
+    "d": "#333a45",
+    "o": "#6b4423"
+   }
+  }
+ },
+ "damageFormula": {
+  "normal": "floor( (ATK*2 - DEF) * rand(0.85..1.15) * crit * guard ), min 1",
+  "criticalRate": 0.12,
+  "criticalMultiplier": 1.6,
+  "guardMultiplier": 0.5,
+  "skill": "floor( (ATK*power - DEF) * rand(0.9..1.1) ), min 1"
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "skills": [
+  {
+   "id": "flame",
+   "name": "かえんぎり",
+   "mp": 4,
+   "power": 2.6,
+   "type": "attack",
+   "unlockLevel": 1,
+   "description": "炎をまとった一撃"
+  },
+  {
+   "id": "heal",
+   "name": "いやしのひかり",
+   "mp": 5,
+   "heal": 26,
+   "type": "heal",
+   "unlockLevel": 2,
+   "description": "HPを回復する"
+  },
+  {
+   "id": "storm",
+   "name": "しっぷうづき",
+   "mp": 7,
+   "power": 3.4,
+   "type": "attack",
+   "unlockLevel": 4,
+   "description": "目にも止まらぬ連続突き"
+  }
+ ]
+}

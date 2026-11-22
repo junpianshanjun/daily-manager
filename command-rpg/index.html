@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>コマンドRPG ― ステップ1</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <h1>コマンドRPG</h1>
+
+  <div id="titleScreen" class="title-screen">
+    <p class="title-logo">⚔ コマンドRPG ⚔</p>
+    <p class="title-sub">フィールドを歩き、魔王を倒す旅へ</p>
+    <div class="title-menu">
+      <button id="newGameBtn" type="button">▶ ニューゲーム</button>
+      <button id="continueBtn" type="button">▶ コンティニュー</button>
+    </div>
+    <p id="titleNote" class="title-note"></p>
+  </div>
+
+  <div id="gameScreen" class="hidden">
+    <div class="hud window">
+      <span id="hudName">ゆうしゃ</span>
+      <span id="hudLv">Lv 1</span>
+      <span id="hudHp">HP 32/32</span>
+      <span id="hudMp">MP 10/10</span>
+      <span id="hudGold">0 G</span>
+      <span id="hudPotion">やくそう 3</span>
+    </div>
+
+    <div id="fieldWrap" class="stage-wrap">
+      <canvas id="fieldCanvas" width="480" height="480"></canvas>
+    </div>
+
+    <div id="battleWrap" class="stage-wrap hidden">
+      <div id="battleStage" class="battle-stage">
+        <canvas id="enemyCanvas" width="192" height="192"></canvas>
+        <div id="enemyInfo" class="enemy-info window"></div>
+        <div id="dmgPopup" class="dmg-popup hidden"></div>
+        <div id="critPopup" class="crit-popup hidden">クリティカル！</div>
+      </div>
+      <div id="commandWindow" class="window command-window hidden"></div>
+    </div>
+
+    <div id="messageWindow" class="window message-window">
+      <span id="messageText"></span><span id="messageCursor" class="msg-cursor hidden">▼</span>
+    </div>
+
+    <div class="field-buttons">
+      <button id="saveBtn" type="button">セーブ</button>
+      <button id="potionBtn" type="button">やくそうを使う</button>
+      <button id="muteBtn" type="button">音：ON</button>
+    </div>
+
+    <div class="pad" aria-label="仮想ゲームパッド">
+      <div class="dpad">
+        <button class="pad-btn pad-up" data-dir="up" type="button">▲</button>
+        <button class="pad-btn pad-left" data-dir="left" type="button">◀</button>
+        <button class="pad-btn pad-right" data-dir="right" type="button">▶</button>
+        <button class="pad-btn pad-down" data-dir="down" type="button">▼</button>
+      </div>
+      <div class="abtns">
+        <button id="padB" class="round-btn" type="button">B<br><small>もどる</small></button>
+        <button id="padA" class="round-btn" type="button">A<br><small>けってい</small></button>
+      </div>
+    </div>
+    <p class="help">キーボード：矢印/WASD＝移動・選択、Enter/Z＝決定、Esc/X＝戻る、M＝音のON/OFF</p>
+  </div>
+
+  <p id="loadError" class="load-error hidden">データを読み込めませんでした。公開ページ（https）から開いてください。</p>
+</div>
+<script src="js/audio.js"></script>
+<script src="js/battle.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
