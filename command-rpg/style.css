@@ -136,3 +136,14 @@ body { touch-action: manipulation; }
   border: 2px solid #888; background: #111; color: #fff;
 }
 .shop-tabs button.active { background: #fff; color: #000; font-weight: 700; }
+
+/* ---- CC0イラスト表示 ---- */
+.title-art { height: 230px; max-width: 80%; object-fit: contain; display: block; margin: 4px auto; }
+.title-credit { color: #778; font-size: 11px; margin: 0 0 10px; }
+.message-window { display: flex; gap: 10px; align-items: flex-start; }
+.msg-portrait {
+  width: 64px; height: 84px; object-fit: cover; object-position: top center; flex: none;
+  border: 2px solid #fff; border-radius: 6px; background: #1c2436;
+}
+.msg-body { flex: 1; min-width: 0; }
+.shop-art { display: block; height: 120px; margin: 2px auto 6px; object-fit: contain; }

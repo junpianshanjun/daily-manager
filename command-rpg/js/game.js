@@ -23,7 +23,13 @@ const Game = (() => {
   const msgEl = () => document.getElementById("messageText");
   const cursorEl = () => document.getElementById("messageCursor");
   let msg = null;
-  function showMessage(text) {
+  function showMessage(text, artKey) {
+    const port = document.getElementById("msgPortrait");
+    if (artKey && window.CC0_ART && CC0_ART[artKey]) {
+      port.src = CC0_ART[artKey]; port.classList.remove("hidden");
+    } else {
+      port.classList.add("hidden"); port.removeAttribute("src");
+    }
     return new Promise((resolve) => {
       if (msg && msg.resolve) msg.resolve();
       msg = { full: text, shown: 0, resolve, timer: null, autoTimer: null };
@@ -282,7 +288,7 @@ const Game = (() => {
     const npc = npcAt(tx, ty);
     if (npc) {
       Sound.se.confirm();
-      for (const line of npc.lines) await showMessage(`${npc.name}「${line}」`);
+      for (const line of npc.lines) await showMessage(`${npc.name}「${line}」`, npc.portraitKey);
       return;
     }
     const def = tileDef(tileAt(tx, ty));
@@ -418,6 +424,11 @@ const Game = (() => {
     let tab = "buy";
     const render = () => {
       const body = openPanel(`ショップ（所持金 ${player.gold} G）`);
+      if (window.CC0_ART) {
+        const img = document.createElement("img");
+        img.src = CC0_ART.wink; img.alt = "看板娘ハチ"; img.className = "shop-art";
+        body.appendChild(img);
+      }
       const tabs = document.createElement("div"); tabs.className = "shop-tabs";
       const b1 = document.createElement("button"); b1.type = "button"; b1.textContent = "買う"; if (tab === "buy") b1.className = "active";
       const b2 = document.createElement("button"); b2.type = "button"; b2.textContent = "売る"; if (tab === "sell") b2.className = "active";
@@ -572,6 +583,7 @@ const Game = (() => {
     showMessage(save ? "ぼうけんの書から 再開した。" : "旅が 始まった！ すぐ北に 街がある。街で装備を整え、東の魔王を 倒そう！");
   }
   async function init() {
+    if (window.CC0_ART) document.getElementById("titleArt").src = CC0_ART.title;
     try {
       const [c, e, s, m, t, it, np] = await Promise.all([
         fetch("data/characters.json").then(r => r.json()),

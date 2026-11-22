@@ -12,6 +12,8 @@
 
   <div id="titleScreen" class="title-screen">
     <p class="title-logo">⚔ コマンドRPG ⚔</p>
+    <img id="titleArt" class="title-art" alt="看板娘ハチ（CC0イラスト）">
+    <p class="title-credit">イラスト：HachiStudio（CC0）/ OpenGameArt</p>
     <p class="title-sub">フィールドを歩き、魔王を倒す旅へ</p>
     <div class="title-menu">
       <button id="newGameBtn" type="button">▶ ニューゲーム</button>
@@ -46,7 +48,8 @@
     </div>
 
     <div id="messageWindow" class="window message-window">
-      <span id="messageText"></span><span id="messageCursor" class="msg-cursor hidden">▼</span>
+      <img id="msgPortrait" class="msg-portrait hidden" alt="">
+      <div class="msg-body"><span id="messageText"></span><span id="messageCursor" class="msg-cursor hidden">▼</span></div>
     </div>
 
     <div class="field-buttons">
@@ -90,6 +93,7 @@
 
   <p id="loadError" class="load-error hidden">データを読み込めませんでした。公開ページ（https）から開いてください。</p>
 </div>
+<script src="js/assets.js"></script>
 <script src="js/audio.js"></script>
 <script src="js/battle.js"></script>
 <script src="js/game.js"></script>
