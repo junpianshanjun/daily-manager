@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Manager | 生活管理</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>Daily Manager</h1>
+      <p id="today" class="today"></p>
+      <p class="subtitle">今日のタスクと習慣を、シンプルに管理しましょう</p>
+    </header>
+
+    <section class="card achievement" aria-label="達成率">
+      <div class="achievement-head">
+        <h2>今日の達成率</h2>
+        <span id="achievementPercent" class="percent">0%</span>
+      </div>
+      <div class="progress" aria-hidden="true">
+        <div id="achievementBar" class="progress-bar"></div>
+      </div>
+      <p id="achievementDetail" class="detail">タスク 0 / 0 ・ 習慣 0 / 0</p>
+    </section>
+
+    <section class="card" aria-label="タスク">
+      <h2>タスク</h2>
+      <form id="taskForm" class="add-form">
+        <label class="sr-only" for="taskInput">タスクを入力</label>
+        <input id="taskInput" type="text" placeholder="例：買い物に行く" maxlength="100" autocomplete="off">
+        <button type="submit" class="add-btn">追加</button>
+      </form>
+      <p id="taskEmpty" class="empty">タスクはまだありません。上の欄から追加してください。</p>
+      <ul id="taskList" class="list"></ul>
+    </section>
+
+    <section class="card" aria-label="習慣">
+      <h2>習慣</h2>
+      <form id="habitForm" class="add-form">
+        <label class="sr-only" for="habitInput">習慣を入力</label>
+        <input id="habitInput" type="text" placeholder="例：散歩する" maxlength="100" autocomplete="off">
+        <button type="submit" class="add-btn">追加</button>
+      </form>
+      <p id="habitEmpty" class="empty">習慣はまだありません。上の欄から追加してください。</p>
+      <ul id="habitList" class="list"></ul>
+    </section>
+
+    <footer class="footer">
+      <p>データはこのスマホのブラウザ内にだけ保存されます。</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
