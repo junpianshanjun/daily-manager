@@ -1,0 +1,61 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  background: #1e293b; color: #111827; line-height: 1.6;
+}
+.app { max-width: 480px; margin: 0 auto; padding: 16px 14px 36px; }
+.header { text-align: center; color: #fff; padding: 10px 0 2px; }
+.header h1 { margin: 0; font-size: 25px; }
+.subtitle { margin: 4px 0 0; color: #cbd5e1; font-size: 14px; }
+.card {
+  background: #fff; border-radius: 14px;
+  padding: 16px; margin-top: 14px;
+}
+.status-row {
+  display: flex; justify-content: space-between; gap: 8px;
+  font-weight: 700; flex-wrap: wrap;
+}
+.bar-label {
+  display: flex; justify-content: space-between;
+  font-size: 13px; color: #374151; margin-top: 10px;
+}
+.bar { height: 12px; background: #e5e7eb; border-radius: 999px; overflow: hidden; }
+.bar > div { height: 100%; transition: width 0.3s ease; }
+.bar.hp > div { background: #22c55e; }
+.bar.mp > div { background: #3b82f6; }
+.bar.exp > div { background: #f59e0b; }
+.bar.enemy-hp > div { background: #ef4444; }
+.place { margin: 10px 0 0; font-weight: 600; color: #475569; }
+.enemy-visual { text-align: center; padding-bottom: 10px; }
+.enemy-emoji { font-size: 72px; line-height: 1.2; }
+.enemy-visual.shake { animation: shake 0.35s ease; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+.enemy-name { font-size: 19px; font-weight: 700; }
+.enemy-hp { max-width: 260px; margin: 8px auto 0; }
+.enemy-hp-text { font-size: 13px; color: #6b7280; }
+.log {
+  background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px;
+  padding: 12px; min-height: 120px; font-size: 15px;
+  white-space: pre-line;
+}
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.actions button {
+  min-height: 52px; border: none; border-radius: 12px;
+  font-size: 16px; font-weight: 700; padding: 10px 6px;
+  background: #2563eb; color: #fff;
+}
+.actions button.secondary { background: #e2e8f0; color: #111827; }
+.actions button.danger { background: #dc2626; }
+.actions button:disabled { opacity: 0.4; }
+.actions button:active { opacity: 0.85; }
+.sub-actions { display: flex; gap: 10px; margin-top: 14px; }
+.sub-actions button {
+  flex: 1; min-height: 48px; border-radius: 10px;
+  border: 1px solid #64748b; background: transparent; color: #e2e8f0; font-size: 14px;
+}
+.note { text-align: center; color: #94a3b8; font-size: 13px; }

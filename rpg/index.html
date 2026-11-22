@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ちいさな勇者の冒険 | RPG</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>ちいさな勇者の冒険</h1>
+      <p class="subtitle">魔王をたおして、村に平和を取り戻そう</p>
+    </header>
+
+    <section class="card status" aria-label="ステータス">
+      <div class="status-row">
+        <span id="level">Lv 1</span>
+        <span id="gold">30 G</span>
+        <span id="potion">ポーション ×2</span>
+      </div>
+      <div class="bar-label"><span>HP</span><span id="hpText">40 / 40</span></div>
+      <div class="bar hp"><div id="hpBar"></div></div>
+      <div class="bar-label"><span>MP</span><span id="mpText">10 / 10</span></div>
+      <div class="bar mp"><div id="mpBar"></div></div>
+      <div class="bar-label"><span>EXP</span><span id="expText">0 / 20</span></div>
+      <div class="bar exp"><div id="expBar"></div></div>
+      <p id="place" class="place">場所：はじまりの村</p>
+    </section>
+
+    <section class="card scene" aria-label="場面">
+      <div id="enemyVisual" class="enemy-visual" hidden>
+        <div id="enemyEmoji" class="enemy-emoji">🟢</div>
+        <div id="enemyName" class="enemy-name"></div>
+        <div class="bar enemy-hp"><div id="enemyHpBar"></div></div>
+        <div id="enemyHpText" class="enemy-hp-text"></div>
+      </div>
+      <div id="log" class="log" aria-live="polite"></div>
+    </section>
+
+    <section class="card" aria-label="コマンド">
+      <div id="actions" class="actions"></div>
+    </section>
+
+    <div class="sub-actions">
+      <button id="saveBtn" type="button">セーブする</button>
+      <button id="resetBtn" type="button">最初からやり直す</button>
+    </div>
+    <p class="note">セーブはこのスマホのブラウザに保存されます。</p>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
