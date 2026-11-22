@@ -23,7 +23,7 @@ const Game = (() => {
   const msgEl = () => document.getElementById("messageText");
   const cursorEl = () => document.getElementById("messageCursor");
   let msg = null;
-  function showMessage(text, artKey) {
+  function showMessage(text, artKey, voiceKey) {
     const port = document.getElementById("msgPortrait");
     if (artKey && window.CC0_ART && CC0_ART[artKey]) {
       port.src = CC0_ART[artKey]; port.classList.remove("hidden");
@@ -32,12 +32,17 @@ const Game = (() => {
     }
     return new Promise((resolve) => {
       if (msg && msg.resolve) msg.resolve();
-      msg = { full: text, shown: 0, resolve, timer: null, autoTimer: null };
+      msg = { full: text, shown: 0, resolve, timer: null, autoTimer: null, voiceKey };
+      speakLine(text, voiceKey);
       cursorEl().classList.add("hidden");
       msgEl().textContent = "";
       msg.timer = setInterval(() => {
         if (!msg) return;
         msg.shown += 1;
+        if (voiceOn && msg.voiceKey && VOICES[msg.voiceKey] && msg.shown % 2 === 0) {
+          const ch = msg.full[msg.shown - 1];
+          if (ch && !"、。！？…「」（） ".includes(ch)) Sound.blip(VOICES[msg.voiceKey].blip);
+        }
         msgEl().textContent = msg.full.slice(0, msg.shown);
         if (msg.shown >= msg.full.length) finishTyping();
       }, 14);
@@ -66,6 +71,31 @@ const Game = (() => {
     return false;
   }
   const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+  /* ---------- キャラボイス（音声合成TTS＋文字送りボイス音） ---------- */
+  const VOICES = {
+    hachi:    { blip: 320, pitch: 1.5, rate: 1.05 },
+    elder:    { blip: 95,  pitch: 0.7, rate: 0.92 },
+    priest:   { blip: 150, pitch: 0.95, rate: 0.95 },
+    villager: { blip: 190, pitch: 1.05, rate: 1.0 },
+    boss:     { blip: 65,  pitch: 0.5, rate: 0.85 },
+  };
+  let voiceOn = localStorage.getItem("commandRpg_voice") !== "0";
+  function speakLine(text, voiceKey) {
+    if (!voiceOn || !voiceKey || !("speechSynthesis" in window)) return;
+    const v = VOICES[voiceKey]; if (!v) return;
+    const m = text.match(/「([^」]*)」/);
+    const line = m ? m[1] : text;
+    try {
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(line);
+      u.lang = "ja-JP"; u.pitch = v.pitch; u.rate = v.rate;
+      const ja = speechSynthesis.getVoices().find(x => x.lang && x.lang.startsWith("ja"));
+      if (ja) u.voice = ja;
+      speechSynthesis.speak(u);
+    } catch {}
+  }
+  function stopSpeak() { if ("speechSynthesis" in window) { try { speechSynthesis.cancel(); } catch {} } }
 
   /* ---------- 確認ダイアログ（2段階確認） ---------- */
   let confirmState = null;
@@ -288,7 +318,7 @@ const Game = (() => {
     const npc = npcAt(tx, ty);
     if (npc) {
       Sound.se.confirm();
-      for (const line of npc.lines) await showMessage(`${npc.name}「${line}」`, npc.portraitKey);
+      for (const line of npc.lines) await showMessage(`${npc.name}「${line}」`, npc.portraitKey, npc.voiceKey);
       return;
     }
     const def = tileDef(tileAt(tx, ty));
@@ -621,6 +651,14 @@ const Game = (() => {
     });
     document.getElementById("menuBtn").addEventListener("click", () => { if (!panelOpen) openMenu(); });
     document.getElementById("muteBtn").addEventListener("click", toggleMute);
+    const vb = document.getElementById("voiceBtn");
+    vb.textContent = voiceOn ? "ボイス：ON" : "ボイス：OFF";
+    vb.addEventListener("click", () => {
+      voiceOn = !voiceOn;
+      localStorage.setItem("commandRpg_voice", voiceOn ? "1" : "0");
+      vb.textContent = voiceOn ? "ボイス：ON" : "ボイス：OFF";
+      if (!voiceOn) stopSpeak();
+    });
     document.getElementById("potionBtn").addEventListener("click", () => {
       if (Battle.isActive() || !player || panelOpen) return;
       const c = DATA.items.consumables.find(x => x.id === "potion");

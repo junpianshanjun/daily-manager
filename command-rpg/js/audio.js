@@ -47,8 +47,13 @@ const Sound = (() => {
     encounter() { tone(110, 0.3, "sawtooth", 0.14, 0, 440); },
     spring() { [659, 784, 988].forEach((f, i) => tone(f, 0.15, "sine", 0.12, i * 0.1)); },
   };
+  function blip(freq) {
+    // キャラボイス風の短い音（文字送りに合わせて鳴らす）
+    tone(freq * (0.94 + Math.random() * 0.12), 0.045, "triangle", 0.055);
+  }
   return {
     se,
+    blip,
     isMuted: () => muted,
     toggleMute() {
       muted = !muted;

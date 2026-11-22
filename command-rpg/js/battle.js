@@ -198,7 +198,12 @@ const Battle = (() => {
     document.getElementById("battleWrap").classList.remove("hidden");
     drawEnemy(false); enemyInfo();
     Sound.se.encounter();
-    await Game.showMessage(boss ? `まおうが あらわれた！` : `${enemy.name}が あらわれた！`);
+    if (boss) {
+      await Game.showMessage(`まおう「よくぞ 来た、ゆうしゃよ。この世界は わが闇に沈むのだ…！」`, null, "boss");
+      await Game.showMessage(`まおうが あらわれた！`);
+    } else {
+      await Game.showMessage(`${enemy.name}が あらわれた！`);
+    }
 
     let result = null;
     while (!result) {

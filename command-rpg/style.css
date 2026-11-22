@@ -147,3 +147,5 @@ body { touch-action: manipulation; }
 }
 .msg-body { flex: 1; min-width: 0; }
 .shop-art { display: block; height: 120px; margin: 2px auto 6px; object-fit: contain; }
+.field-buttons { flex-wrap: wrap; }
+.field-buttons button { flex: 1 1 30%; }
